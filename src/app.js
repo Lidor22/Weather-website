@@ -55,7 +55,6 @@ app.get('/weather', (req,res) => {
             error:'Must provide address!'
         })
     }
-
     geocode(req.query.address,(error, geoCodeObject = {} )=>{
         if(error){
             res.send({
@@ -63,7 +62,7 @@ app.get('/weather', (req,res) => {
             })
         }
         else{
-            forecast(geoCodeObject.latitude,geoCodeObject.longtitude,(error , forecastData)=>{
+            forecast(geoCodeObject.latitude,geoCodeObject.longtitude,(error , forecastData , weeklyForcast)=>{
                 if(error){
                     res.send({
                         error:'Cannot find the weather of this location!'
@@ -71,8 +70,10 @@ app.get('/weather', (req,res) => {
                 }
                 else
                 {
+
                     res.send({
                         forecast: forecastData,
+                        weekly : weeklyForcast,
                         location: geoCodeObject.location,
                         address: req.query.address
                 })
